@@ -24,12 +24,12 @@ Utilizando estos valores de cartas se podrán realizar combinaciones para reunir
 
 Como se juega:
 
-El juego comienza con un jugador repartiendo cuatro cartas sobre la mesa y tres cartas a cada jugador. Al repartir las cuatro cartas en la mesa puede ocurrir que:
-  •	Si todas ellas suman entre si 15 puntos, el jugador que es mano se podrá quedar con todas éstas, realizando así una escoba de mano. 
+- El juego comienza con un jugador repartiendo cuatro cartas sobre la mesa y tres cartas a cada jugador. Al repartir las cuatro cartas en la mesa puede ocurrir que:
+  + Si todas ellas suman entre si 15 puntos, el jugador que es mano se podrá quedar con todas éstas, realizando así una escoba de mano. 
 
-El primer turno lo tendrá el jugador que sea mano (siguiente jugador a la derecha del repartidor) y se seguirá cambiando en el sentido de las agujas del reloj. Entonces, el mano podrá realizar dos posibles jugadas:
-  •	Jugar y utilizar todas las cartas de la mesa para sumar 15 puntos. Las podrá tomar y realizar lo que se llama una escoba.
-  •	Jugar con las cartas que posee en mano y combinarlas con las cartas de la mesa para que sumen 15 puntos. Esto se llama una baza.
+- El primer turno lo tendrá el jugador que sea mano (siguiente jugador a la derecha del repartidor) y se seguirá cambiando en el sentido de las agujas del reloj. Entonces, el mano podrá realizar dos posibles jugadas:
+  + Jugar y utilizar todas las cartas de la mesa para sumar 15 puntos. Las podrá tomar y realizar lo que se llama una escoba.
+  + Jugar con las cartas que posee en mano y combinarlas con las cartas de la mesa para que sumen 15 puntos. Esto se llama una baza.
 
 - Luego de hacer una escoba o baza, se colocarán las cartas obtenidas en el monto del jugador.
 - Cuando un jugador no pueda realizar una baza o escoba, tendrá que seleccionar una de sus cartas en la mano y colocarla en la mesa a modo de ofrenda.
