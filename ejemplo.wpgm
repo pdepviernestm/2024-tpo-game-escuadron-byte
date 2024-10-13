@@ -1,0 +1,31 @@
+import jugador.*
+import tablero.*
+import cartas.*
+import wollok.game.*
+
+program juego {
+
+game.width(23)
+game.height(21)
+
+game.boardGround("fondo1.png")
+
+game.schedule(50, {tablero.llenarMazoPalo()})
+
+game.schedule(100,{
+    var cont = 0
+    const mesaAux = tablero.llenarMesa()
+    mesaAux.forEach({
+        carta => game.addVisual(carta)
+        carta.position(game.at(cont+10,10))
+        cont+=3
+        })
+        
+    })
+
+
+
+
+game.start()
+}
+
