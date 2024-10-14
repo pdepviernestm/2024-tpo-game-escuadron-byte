@@ -1,0 +1,48 @@
+import jugador.*
+import tablero.*
+import cartas.*
+import wollok.game.*
+
+program juego {
+
+const jugador1 = new Jugador()
+const jugador2 = new Jugador()
+var mesaAux = []
+game.width(22)
+game.height(22)
+
+game.boardGround("fondo1.png")
+
+tablero.llenarMazo()
+tablero.anadirJugadores(jugador1)
+tablero.anadirJugadores(jugador2)
+
+if (!tablero.mostrarMazo().isEmpty()) {
+    // llenar mesa
+    var cont = 0
+    mesaAux = tablero.llenarMesa()
+    mesaAux.forEach({
+            carta => game.addVisual(carta)
+            carta.position(game.at(cont+4,10))
+            cont+=4})
+
+    // repartir jugadores
+
+    var cont2 = 0
+    tablero.repartirJugadores()
+    jugador1.mostrarMano().forEach({
+        carta => game.addVisual(carta)
+        carta.position(game.at(cont2+4,18))
+        cont2+=4})
+    cont2 = 0
+    jugador2.mostrarMano().forEach({
+        carta => game.addVisual(carta)
+        carta.position(game.at(cont2+4,1))
+        cont2+=4})
+
+} else {
+    throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
+  }
+
+game.start()
+}

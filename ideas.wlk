@@ -163,7 +163,7 @@ object tablero {
         return cartasRepartidas
     } 
 
-     method llenarMazoPalo() {
+     method llenarMazo() {
         const num = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12]
         num.forEach({ncarta => mazo.add(new Cartas(valor = ncarta, palo = "oro"))})
         num.forEach({ncarta => mazo.add(new Cartas(valor = ncarta, palo = "copa"))})

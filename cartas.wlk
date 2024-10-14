@@ -1,7 +1,7 @@
 class Cartas {
     var valor
     var palo
-    var position = game.at(50, 50)
+    var property position = game.at(50, 50)
 
     method initialize(valorInicial, paloInicial) {
         valor = valorInicial
@@ -18,13 +18,5 @@ class Cartas {
 
     method image() {
         return palo + valor + ".png"
-    }
-
-    method posicion() {
-        return position
-    }
-
-    method posicion(nuevaP) {
-        position = nuevaP
     }
 }

@@ -13,6 +13,7 @@ object tablero{
     method saberPuntajeMesa() = mesa.map({carta => carta.valorCarta()}).sum()
     
     method agarrarCarta() {
+        if (mazo.isEmpty()) throw new Exception(message="No hay cartas en el mazo")
         const carta = mazo.anyOne()
         mazo.remove(carta)
         return carta
@@ -40,4 +41,12 @@ object tablero{
     }
     
     method anadirJugadores(jugador) = jugadores.add(jugador)
+
+    method jugada(jugador, carta) {
+        if(jugador.hayJugada(carta)) {
+            const cartasARemover = jugador.mostrarCartasAJugar()
+            mesa.remove([carta,cartasARemover])  
+        }
+        return mesa
+    }
 }
