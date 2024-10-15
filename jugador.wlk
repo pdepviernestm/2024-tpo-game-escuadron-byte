@@ -18,7 +18,7 @@ class Jugador{
     method anadirCartaMonto(carta) = montojugador.add(carta)
     method anadirCartaAJugar(carta) = cartasAJugar.add(carta)
 
-    method hayJugada(carta) = (carta.valor() + cartasAJugar.map({x => x.valor()}).sum() == 15)
+    method hayJugada(carta) = (carta.valorCarta() + cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
     method jugada(carta) {
                 if (self.hayJugada(carta)) {

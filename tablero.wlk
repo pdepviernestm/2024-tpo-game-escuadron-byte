@@ -47,6 +47,5 @@ object tablero{
             const cartasARemover = jugador.mostrarCartasAJugar()
             mesa.remove([carta,cartasARemover])  
         }
-        return mesa
     }
 }

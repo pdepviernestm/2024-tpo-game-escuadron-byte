@@ -3,15 +3,22 @@ import tablero.*
 import cartas.*
 import wollok.game.*
 
+object marco {
+    var property position = game.origin()
+    method image() = "marco.png"
+}
+
 program juego {
 
 const jugador1 = new Jugador()
 const jugador2 = new Jugador()
 var mesaAux = []
+var manoAux = []
 game.width(22)
 game.height(22)
 
 game.boardGround("fondo1.png")
+game.addVisual(marco)
 
 tablero.llenarMazo()
 tablero.anadirJugadores(jugador1)
@@ -44,5 +51,29 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
+var n = 0
+var carta
+/*game.onTick(3000,"mover",{
+    n += 1
+    mesaAux = tablero.mostrarMesa()
+    marco.position(mesaAux.get(n).position())})
+*/
+
+keyboard.a().onPressDo {
+    n = [0,1,2,3].anyOne()
+    mesaAux = tablero.mostrarMesa()
+    carta = mesaAux.get(n)
+    marco.position(mesaAux.get(n).position()) }
+
+keyboard.s().onPressDo {
+    n = [0,1,2].anyOne()
+    manoAux = jugador1.mostrarMano()
+    carta = manoAux.get(n)
+    marco.position(manoAux.get(n).position()) }
+
+keyboard.enter().onPressDo {
+    game.say(carta, carta.msg()) 
+    jugador1.anadirCartaAJugar(carta)
+    }
 game.start()
 }
