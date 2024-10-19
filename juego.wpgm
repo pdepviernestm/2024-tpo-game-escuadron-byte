@@ -1,0 +1,98 @@
+import jugador.*
+import tablero.*
+import cartas.*
+import wollok.game.*
+
+object marco {
+    var property position = game.origin()
+    method image() = "marco.png"
+}
+
+object monto {
+    var property position = game.origin()
+    method image() = "marco.png"
+}
+
+program juego {
+
+const jugador1 = new Jugador()
+const jugador2 = new Jugador()
+var mesaAux = []
+var manoAux = []
+game.width(22)
+game.height(22)
+
+game.boardGround("fondo1.png")
+game.addVisual(marco)
+
+tablero.llenarMazo()
+tablero.anadirJugadores(jugador1)
+tablero.anadirJugadores(jugador2)
+
+if (!tablero.mostrarMazo().isEmpty()) {
+    // llenar mesa
+    var cont = 0
+    mesaAux = tablero.llenarMesa()
+    mesaAux.forEach({
+            carta => game.addVisual(carta)
+            carta.position(game.at(cont+4,10))
+            cont+=4})
+
+    // repartir jugadores
+
+    var cont2 = 0
+    tablero.repartirJugadores()
+    jugador1.mostrarMano().forEach({
+        carta => game.addVisual(carta)
+        carta.position(game.at(cont2+4,18))
+        cont2+=4})
+    cont2 = 0
+    jugador2.mostrarMano().forEach({
+        carta => game.addVisual(carta)
+        carta.position(game.at(cont2+4,1))
+        cont2+=4})
+
+} else {
+    throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
+  }
+
+var n = 0
+var carta = 0
+/*game.onTick(3000,"mover",{
+    n += 1
+    mesaAux = tablero.mostrarMesa()
+    marco.position(mesaAux.get(n).position())})
+*/
+
+keyboard.a().onPressDo {
+    n = [0,1,2,3].anyOne()
+    mesaAux = tablero.mostrarMesa()
+    carta = mesaAux.get(n)
+    marco.position(mesaAux.get(n).position()) }
+
+keyboard.s().onPressDo {
+    n = [0,1,2].anyOne()
+    manoAux = jugador1.mostrarMano()
+    carta = manoAux.get(n)
+    marco.position(manoAux.get(n).position()) }
+
+keyboard.enter().onPressDo {
+    game.say(carta, carta.msg()) 
+    jugador1.anadirCartaAJugar(carta)
+    }
+
+keyboard.e().onPressDo {
+    if(jugador1.hayJugada()){
+        tablero.jugada(jugador1)
+        jugador1.jugada()
+        game.addVisual(monto)
+        marco.position(game.at(20,20))
+    } else {
+        jugador1.limpiarCartasAJugar()
+        throw new Exception(message="No hay jugada.")
+        }
+    
+    }
+
+game.start()
+}
