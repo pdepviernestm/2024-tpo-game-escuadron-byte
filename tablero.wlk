@@ -42,10 +42,9 @@ object tablero{
     
     method anadirJugadores(jugador) = jugadores.add(jugador)
 
-    method jugada(jugador, carta) {
-        if(jugador.hayJugada(carta)) {
+    method jugada(jugador) {
             const cartasARemover = jugador.mostrarCartasAJugar()
-            mesa.remove([carta,cartasARemover])  
-        }
+            cartasARemover.forEach({ _carta => mesa.remove(_carta) })
     }
+
 }

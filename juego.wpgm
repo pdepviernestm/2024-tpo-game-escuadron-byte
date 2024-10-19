@@ -8,6 +8,11 @@ object marco {
     method image() = "marco.png"
 }
 
+object monto {
+    var property position = game.origin()
+    method image() = "marco.png"
+}
+
 program juego {
 
 const jugador1 = new Jugador()
@@ -52,7 +57,7 @@ if (!tablero.mostrarMazo().isEmpty()) {
   }
 
 var n = 0
-var carta
+var carta = 0
 /*game.onTick(3000,"mover",{
     n += 1
     mesaAux = tablero.mostrarMesa()
@@ -75,5 +80,19 @@ keyboard.enter().onPressDo {
     game.say(carta, carta.msg()) 
     jugador1.anadirCartaAJugar(carta)
     }
+
+keyboard.e().onPressDo {
+    if(jugador1.hayJugada()){
+        tablero.jugada(jugador1)
+        jugador1.jugada()
+        game.addVisual(monto)
+        marco.position(game.at(20,20))
+    } else {
+        jugador1.limpiarCartasAJugar()
+        throw new Exception(message="No hay jugada.")
+        }
+    
+    }
+
 game.start()
 }
