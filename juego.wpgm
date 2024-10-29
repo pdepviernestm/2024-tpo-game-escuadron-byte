@@ -1,3 +1,4 @@
+import ideas.*
 import jugador.*
 import tablero.*
 import cartas.*
@@ -18,7 +19,7 @@ program juego {
 const jugador1 = new Jugador()
 const jugador2 = new Jugador()
 const mesaAux = tablero.mostrarMesa()
-const manoAux = jugador1.mostrarMano()
+const manoAux = jugador.mostrarMano()
 game.width(22)
 game.height(22)
 
@@ -55,16 +56,16 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
-game.addVisual(marco)
-marco.position(manoAux.get(0).position())
-
 jugador1.turno(1)
 
 var carta = 0
 var indiceMesa = 0
 var indiceMano = 0
 var state = 0
-const jugador = tablero.jugadorConTurno()
+var jugador = tablero.jugadorConTurno()
+
+game.addVisual(marco)
+marco.position(manoAux.get(0).position())
 
 keyboard.left().onPressDo {
     if (state == 0) {
@@ -124,6 +125,10 @@ keyboard.t().onPressDo {
         carta.position(game.at(cartaAux.position().x()+4,6))
     }
 }
+
+/* keyboard.q().onPressDo {
+    tablero.cambiarTurno()
+} */
 
 game.start()
 }
