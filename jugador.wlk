@@ -5,6 +5,7 @@ class Jugador{
     const cartasAJugar = []
 
     var escobas = 0
+    var property turno = 0
 
     method mostrarMano() = manojugador
     method mostrarMonto() = montojugador 
@@ -22,7 +23,8 @@ class Jugador{
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
     method jugada() {
-                    cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta) })
+                    cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta) 
+                                                     self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
                     //self.eliminarCartaMano(carta)
                     escobas = escobas + 1

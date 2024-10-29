@@ -18,12 +18,11 @@ program juego {
 const jugador1 = new Jugador()
 const jugador2 = new Jugador()
 const mesaAux = tablero.mostrarMesa()
-var manoAux = jugador1.mostrarMano()
+const manoAux = jugador1.mostrarMano()
 game.width(22)
 game.height(22)
 
 game.boardGround("fondo1.png")
-game.addVisual(marco)
 
 tablero.llenarMazo()
 tablero.anadirJugadores(jugador1)
@@ -56,38 +55,44 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
+game.addVisual(marco)
+marco.position(manoAux.get(0).position())
+
+jugador1.turno(1)
+
 var carta = 0
 var indiceMesa = 0
 var indiceMano = 0
 var state = 0
+const jugador = tablero.jugadorConTurno()
 
 keyboard.left().onPressDo {
     if (state == 0) {
-        indiceMesa = tablero.moverIzq(indiceMesa)
-        carta = mesaAux.get(indiceMesa)
-        marco.position(carta.position())
-    } else if (state == 1) {
         indiceMano = tablero.moverIzq(indiceMano)
         carta = manoAux.get(indiceMano)
+        marco.position(carta.position())
+    } else if (state == 1) {
+        indiceMesa = tablero.moverIzq(indiceMesa)
+        carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
 }
 
 keyboard.right().onPressDo {
     if (state == 0) {
-        indiceMesa = tablero.moverDer(indiceMesa)
-        carta = mesaAux.get(indiceMesa)
-        marco.position(carta.position())
-    } else if (state == 1) {
         indiceMano = tablero.moverDer(indiceMano)
         carta = manoAux.get(indiceMano)
+        marco.position(carta.position())
+    } else if (state == 1) {
+        indiceMesa = tablero.moverDer(indiceMesa)
+        carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
 }
 
 keyboard.enter().onPressDo {
     game.say(carta, carta.msg()) 
-    jugador1.anadirCartaAJugar(carta)
+    jugador.anadirCartaAJugar(carta)
     }
 
 keyboard.r().onPressDo {
@@ -96,17 +101,29 @@ keyboard.r().onPressDo {
 
 keyboard.e().onPressDo {
     state = 0
-    if(jugador1.hayJugada()){
-        tablero.jugada(jugador1)
-        jugador1.jugada()
+    if(jugador.hayJugada()){
+        jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
+        tablero.jugada(jugador)
+        jugador.jugada()
         game.addVisual(monto)
         monto.position(game.at(20,20))
     } else {
-        jugador1.limpiarCartasAJugar()
+        jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
     
     }
+
+keyboard.t().onPressDo {
+    if(manoAux.contains(carta)){
+        game.removeVisual(carta)
+        jugador.eliminarCartaMano(carta)
+        tablero.anadirCartaMesa(carta)
+        game.addVisual(carta)
+        const cartaAux = mesaAux.get(mesaAux.size()-1)
+        carta.position(game.at(cartaAux.position().x()+4,6))
+    }
+}
 
 game.start()
 }

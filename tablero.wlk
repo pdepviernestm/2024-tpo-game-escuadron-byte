@@ -8,6 +8,8 @@ object tablero{
     method mostrarMazo() = mazo
     method mostrarMesa() = mesa
 
+    method jugadorConTurno() = jugadores.find({j => j.turno() == 1})
+
     method anadirCartaMesa(carta) = mesa.add(carta)
     
     method saberPuntajeMesa() = mesa.map({carta => carta.valorCarta()}).sum()
@@ -54,5 +56,9 @@ object tablero{
     method moverIzq(indice) {
         i = (indice - 1 + mesa.size()) % mesa.size() 
         return i
+    }
+
+    method cambiarTurno() {
+        self.jugadorConTurno().turno(0)
     }
 }
