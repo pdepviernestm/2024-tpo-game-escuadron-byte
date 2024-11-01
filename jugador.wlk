@@ -6,9 +6,8 @@ class Jugador{
 
     var escobas = 0
 
-    /* const turno = false
-    method turno() = turno
-    method cambiarTurno() = !turno */
+    var property turno = false
+    method cambiarTurno() = !turno 
 
     method mostrarMano() = manojugador
     method mostrarMonto() = montojugador 

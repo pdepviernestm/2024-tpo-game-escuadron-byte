@@ -1,4 +1,3 @@
-import ideas.*
 import jugador.*
 import tablero.*
 import cartas.*
@@ -16,14 +15,18 @@ object monto {
 
 program juego {
 
-//tablero.moverIzq()
 
 const jugador1 = new Jugador()
 const jugador2 = new Jugador()
-var mesaAux
-mesaAux = tablero.mostrarMesa()
-var manoAux
-manoAux = jugador1.mostrarMano()
+tablero.anadirJugadores(jugador1)
+tablero.anadirJugadores(jugador2)
+
+jugador1.turno(1)
+
+var jugador = tablero.jugadorConTurno()
+
+var mesaAux = tablero.mostrarMesa()
+var manoAux = jugador.mostrarMano()
 
 var carta = 0
 var indiceMesa = 0
@@ -36,8 +39,6 @@ game.height(22)
 game.boardGround("fondo1.png")
 
 tablero.llenarMazo()
-tablero.anadirJugadores(jugador1)
-tablero.anadirJugadores(jugador2)
 
 if (!tablero.mostrarMazo().isEmpty()) {
     // llenar mesa
@@ -66,20 +67,18 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
-//jugador1.turno(1)
 
-//const jugador = tablero.jugadorConTurno()
 
 game.addVisual(marco)
 marco.position(manoAux.get(0).position())
 
 keyboard.left().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverIzq()
+        indiceMano = tablero.moverIzq(indiceMano)
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverIzq()
+        indiceMesa = tablero.moverIzq(indiceMesa)
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -87,11 +86,11 @@ keyboard.left().onPressDo {
 
 keyboard.right().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverDer()
+        indiceMano = tablero.moverDer(indiceMano)
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverDer()
+        indiceMesa = tablero.moverDer(indiceMesa)
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -99,7 +98,7 @@ keyboard.right().onPressDo {
 
 keyboard.enter().onPressDo {
     game.say(carta, carta.msg()) 
-    jugador1.anadirCartaAJugar(carta)
+    jugador.anadirCartaAJugar(carta)
     }
 
 keyboard.r().onPressDo {
@@ -108,33 +107,41 @@ keyboard.r().onPressDo {
 
 keyboard.e().onPressDo {
     state = 0
-    if(jugador1.hayJugada()){
-        jugador1.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
-        tablero.jugada(jugador1)
-        jugador1.jugada()
+    if(jugador.hayJugada()){
+        jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
+        tablero.jugada(jugador)
+        jugador.jugada()
         game.addVisual(monto)
         monto.position(game.at(20,20))
     } else {
-        jugador1.limpiarCartasAJugar()
+        jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
-    
+
+    tablero.cambiarTurno()
+    jugador = tablero.jugadorConTurno()
+    mesaAux = tablero.mostrarMesa()
+    manoAux = jugador.mostrarMano()
     }
 
 keyboard.t().onPressDo {
     if(manoAux.contains(carta)){
         game.removeVisual(carta)
-        jugador1.eliminarCartaMano(carta)
+        jugador.eliminarCartaMano(carta)
         tablero.anadirCartaMesa(carta)
         game.addVisual(carta)
         const cartaAux = mesaAux.get(mesaAux.size()-1)
         carta.position(game.at(cartaAux.position().x()+4,6))
     }
+    tablero.cambiarTurno()
+    jugador = tablero.jugadorConTurno()
+    mesaAux = tablero.mostrarMesa()
+    manoAux = jugador.mostrarMano()
 }
 
-/* keyboard.q().onPressDo {
-    tablero.cambiarTurno()
-} */
+keyboard.q().onPressDo {
+    
+}
 
 game.start()
 }
