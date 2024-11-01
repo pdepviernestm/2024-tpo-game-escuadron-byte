@@ -16,10 +16,20 @@ object monto {
 
 program juego {
 
+//tablero.moverIzq()
+
 const jugador1 = new Jugador()
 const jugador2 = new Jugador()
-const mesaAux = tablero.mostrarMesa()
-const manoAux = jugador.mostrarMano()
+var mesaAux
+mesaAux = tablero.mostrarMesa()
+var manoAux
+manoAux = jugador1.mostrarMano()
+
+var carta = 0
+var indiceMesa = 0
+var indiceMano = 0
+var state = 0
+
 game.width(22)
 game.height(22)
 
@@ -56,24 +66,20 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
-jugador1.turno(1)
+//jugador1.turno(1)
 
-var carta = 0
-var indiceMesa = 0
-var indiceMano = 0
-var state = 0
-var jugador = tablero.jugadorConTurno()
+//const jugador = tablero.jugadorConTurno()
 
 game.addVisual(marco)
 marco.position(manoAux.get(0).position())
 
 keyboard.left().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverIzq(indiceMano)
+        indiceMano = tablero.moverIzq()
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverIzq(indiceMesa)
+        indiceMesa = tablero.moverIzq()
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -81,11 +87,11 @@ keyboard.left().onPressDo {
 
 keyboard.right().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverDer(indiceMano)
+        indiceMano = tablero.moverDer()
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverDer(indiceMesa)
+        indiceMesa = tablero.moverDer()
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -93,7 +99,7 @@ keyboard.right().onPressDo {
 
 keyboard.enter().onPressDo {
     game.say(carta, carta.msg()) 
-    jugador.anadirCartaAJugar(carta)
+    jugador1.anadirCartaAJugar(carta)
     }
 
 keyboard.r().onPressDo {
@@ -102,14 +108,14 @@ keyboard.r().onPressDo {
 
 keyboard.e().onPressDo {
     state = 0
-    if(jugador.hayJugada()){
-        jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
-        tablero.jugada(jugador)
-        jugador.jugada()
+    if(jugador1.hayJugada()){
+        jugador1.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
+        tablero.jugada(jugador1)
+        jugador1.jugada()
         game.addVisual(monto)
         monto.position(game.at(20,20))
     } else {
-        jugador.limpiarCartasAJugar()
+        jugador1.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
     
@@ -118,7 +124,7 @@ keyboard.e().onPressDo {
 keyboard.t().onPressDo {
     if(manoAux.contains(carta)){
         game.removeVisual(carta)
-        jugador.eliminarCartaMano(carta)
+        jugador1.eliminarCartaMano(carta)
         tablero.anadirCartaMesa(carta)
         game.addVisual(carta)
         const cartaAux = mesaAux.get(mesaAux.size()-1)

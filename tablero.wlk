@@ -8,7 +8,17 @@ object tablero{
     method mostrarMazo() = mazo
     method mostrarMesa() = mesa
 
-    method jugadorConTurno() = jugadores.find({j => j.turno() == 1})
+    var i = 0
+    method moverDer() {
+        //i = (indice + 1) % mesa.size() 
+        //return i
+    }
+    method moverIzq() {
+        //i = (indice - 1 + mesa.size()) % mesa.size() 
+        //return i
+    }
+
+    //method jugadorConTurno() = jugadores.find({j => j.turno() == 1})
 
     method anadirCartaMesa(carta) = mesa.add(carta)
     
@@ -44,21 +54,16 @@ object tablero{
     method anadirJugadores(jugador) = jugadores.add(jugador)
 
     method jugada(jugador) {
-            const cartasARemover = jugador.mostrarCartasAJugar()
-            cartasARemover.forEach({ _carta => mesa.remove(_carta) })
+            /* const cartasARemover = jugador.mostrarCartasAJugar()
+            cartasARemover.forEach({ _carta => mesa.remove(_carta) }) */
     }
 
-    var i = 0
-    method moverDer(indice) {
-        i = (indice + 1) % mesa.size() 
-        return i
-    }
-    method moverIzq(indice) {
-        i = (indice - 1 + mesa.size()) % mesa.size() 
-        return i
-    }
+    
 
-    method cambiarTurno() {
-        self.jugadorConTurno().turno(0)
-    }
+    /* method cambiarTurno() {
+        const jugadorActual = self.jugadorConTurno()
+        jugadorActual.turno(0)
+        const proximoJugador = jugadores.find({ j => j != jugadorActual })
+        proximoJugador.turno(1)
+    } */
 }

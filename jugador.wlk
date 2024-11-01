@@ -5,7 +5,10 @@ class Jugador{
     const cartasAJugar = []
 
     var escobas = 0
-    var property turno = 0
+
+    /* const turno = false
+    method turno() = turno
+    method cambiarTurno() = !turno */
 
     method mostrarMano() = manojugador
     method mostrarMonto() = montojugador 
