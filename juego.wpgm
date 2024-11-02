@@ -32,6 +32,8 @@ var carta = 0
 var indiceMesa = 0
 var indiceMano = 0
 var state = 0
+var cont = 0
+var cont2 = 0
 
 game.width(22)
 game.height(22)
@@ -42,7 +44,6 @@ tablero.llenarMazo()
 
 if (!tablero.mostrarMazo().isEmpty()) {
     // llenar mesa
-    var cont = 0
     tablero.llenarMesa()
     mesaAux.forEach({
             carta => game.addVisual(carta)
@@ -50,8 +51,6 @@ if (!tablero.mostrarMazo().isEmpty()) {
             cont+=4})
 
     // repartir jugadores
-
-    var cont2 = 0
     tablero.repartirJugadores()
     jugador1.mostrarMano().forEach({
         carta => game.addVisual(carta)
@@ -138,6 +137,23 @@ keyboard.t().onPressDo {
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
 }
+
+keyboard.f().onPressDo {
+    if(jugador1.mostrarMano().isEmpty() && jugador2.mostrarMano().isEmpty()){
+        cont2 = 0
+        tablero.repartirJugadores()
+        jugador1.mostrarMano().forEach({
+            carta => game.addVisual(carta)
+            carta.position(game.at(cont2+4,18))
+            cont2+=4})
+        cont2 = 0
+        jugador2.mostrarMano().forEach({
+            carta => game.addVisual(carta)
+            carta.position(game.at(cont2+4,1))
+            cont2+=4})
+    }
+}
+
 
 keyboard.q().onPressDo {
     
