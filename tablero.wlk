@@ -7,16 +7,7 @@ object tablero{
 
     method mostrarMazo() = mazo
     method mostrarMesa() = mesa
-
-    var i = 0
-    method moverDer(indice) {
-        i = (indice + 1) % mesa.size() 
-        return i
-    }
-    method moverIzq(indice) {
-        i = (indice - 1 + mesa.size()) % mesa.size() 
-        return i
-    }
+    method limpiarMesa() = mesa.clear()
 
     method jugadorConTurno() = jugadores.find({j => j.turno() == 1})
 
@@ -58,12 +49,34 @@ object tablero{
             cartasARemover.forEach({ _carta => mesa.remove(_carta) }) 
     }
 
-    
+    var i = 0
+    method moverDer(indice) {
+        i = (indice + 1) % mesa.size() 
+        return i
+    }
+    method moverIzq(indice) {
+        i = (indice - 1 + mesa.size()) % mesa.size() 
+        return i
+    }
 
     method cambiarTurno() {
         const jugadorActual = self.jugadorConTurno()
         const proximoJugador = jugadores.find({ j => j != jugadorActual })
         jugadorActual.turno(0)
         proximoJugador.turno(1)
-    } 
+    }
+
+    method contarPuntos() {
+        jugadores.forEach({jugador => 
+            if (jugador.tengoMayorCantidadCartas()) jugador.sumarPuntaje()
+            if (jugador.tengo7deVelo()) jugador.sumarPuntaje()
+            if (jugador.tengoSetenta()) jugador.sumarPuntaje()
+            if (jugador.tengoTodosOros()) {
+                (1..2).forEach({x => jugador.sumarPuntaje()})
+            } else if (jugador.tengoMayorCantidadOros()) {
+                jugador.sumarPuntaje()
+            }
+            jugador.contabilizarEscobas()
+        })
+    }
 }

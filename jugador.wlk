@@ -4,10 +4,10 @@ class Jugador{
     const montojugador = []
     const cartasAJugar = []
 
+    var puntaje = 0
     var escobas = 0
 
     var property turno = false
-    method cambiarTurno() = !turno 
 
     method mostrarMano() = manojugador
     method mostrarMonto() = montojugador 
@@ -22,13 +22,40 @@ class Jugador{
     method anadirCartaMonto(carta) = montojugador.add(carta)
     method anadirCartaAJugar(carta) = cartasAJugar.add(carta)
 
+    method sumarPuntaje() {puntaje += 1}
+
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
     method jugada() {
                     cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta) 
                                                      self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
-                    //self.eliminarCartaMano(carta)
                     escobas = escobas + 1
+    }
+
+    method tengoMayorCantidadCartas() = (self.cantidadMontoJugador() > 20)
+    method tengo7deVelo() = (montojugador.any({carta => carta.valorCarta() == 7 && carta.paloCarta() == "oro"}))
+
+    method tengoMayorCantidadOros() {
+        if (montojugador.any({carta => carta.paloCarta() == "oro"})) {
+            (montojugador.filter({carta => carta.paloCarta() == "oro"}).size() > 5)
+        }
+    }
+
+    method tengoTodosOros() {
+        if (montojugador.any({carta => carta.paloCarta() == "oro"})) {
+            (montojugador.filter({carta => carta.paloCarta() == "oro"}).size() == 10)                   
+        }
+    }
+
+    method tengoSetenta() {
+        if (montojugador.any({carta => carta.valorCarta() == 7})) {
+            (montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2)        
+        }
+    }
+
+    method contabilizarEscobas() {
+        puntaje += escobas
+        escobas = 0
     }
 }

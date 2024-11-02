@@ -156,7 +156,13 @@ keyboard.f().onPressDo {
 
 
 keyboard.q().onPressDo {
-    
+    if(tablero.mostrarMazo().isEmpty()) {
+        tablero.contarPuntos()
+        tablero.mostrarMesa().forEach({_carta => jugador.anadirCartaMonto(_carta)
+                                                 game.removeVisual(_carta)
+                                                 })
+        tablero.limpiarMesa()
+    }
 }
 
 game.start()
