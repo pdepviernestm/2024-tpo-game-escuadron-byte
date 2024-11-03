@@ -49,16 +49,6 @@ object tablero{
             cartasARemover.forEach({ _carta => mesa.remove(_carta) }) 
     }
 
-    var i = 0
-    method moverDer(indice) {
-        i = (indice + 1) % mesa.size() 
-        return i
-    }
-    method moverIzq(indice) {
-        i = (indice - 1 + mesa.size()) % mesa.size() 
-        return i
-    }
-
     method cambiarTurno() {
         const jugadorActual = self.jugadorConTurno()
         const proximoJugador = jugadores.find({ j => j != jugadorActual })

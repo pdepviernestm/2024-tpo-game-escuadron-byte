@@ -73,11 +73,18 @@ marco.position(manoAux.get(0).position())
 
 keyboard.left().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverIzq(indiceMano)
+        //console.println(indiceMano)
+        indiceMano -= 1
+        if(indiceMano < 0) {
+            indiceMano = manoAux.size() - 1
+        }
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverIzq(indiceMesa)
+        indiceMesa -= 1
+        if(indiceMesa < 0) {
+            indiceMesa = mesaAux.size() - 1
+        }
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -85,11 +92,18 @@ keyboard.left().onPressDo {
 
 keyboard.right().onPressDo {
     if (state == 0) {
-        indiceMano = tablero.moverDer(indiceMano)
+        //console.println(indiceMano)
+        indiceMano += 1
+        if(indiceMano >= manoAux.size()) {
+            indiceMano = 0
+        }
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
     } else if (state == 1) {
-        indiceMesa = tablero.moverDer(indiceMesa)
+        indiceMesa += 1
+        if(indiceMesa >= mesaAux.size()) {
+            indiceMesa = 0
+        }
         carta = mesaAux.get(indiceMesa)
         marco.position(carta.position())
     }
@@ -161,7 +175,7 @@ keyboard.q().onPressDo {
         tablero.mostrarMesa().forEach({_carta => jugador.anadirCartaMonto(_carta)
                                                  game.removeVisual(_carta)
                                                  })
-        tablero.limpiarMesa()
+        tablero.limpiarMesa() 
     }
 }
 
