@@ -8,7 +8,12 @@ object marco {
     method image() = "marco.png"
 }
 
-object monto {
+object monto1 {
+    var property position = game.origin()
+    method image() = "monto.jpg"
+}
+
+object monto2 {
     var property position = game.origin()
     method image() = "monto.jpg"
 }
@@ -121,18 +126,34 @@ keyboard.r().onPressDo {
 keyboard.e().onPressDo {
     state = 0
     if(jugador.hayJugada()){
-        jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
+        jugador.mostrarCartasAJugar().forEach({_carta => console.println("estoy mostrar cartas a jugar juego")
+                                                        game.removeVisual(_carta)})
         tablero.jugada(jugador)
         jugador.jugada()
-        game.addVisual(monto)
-        monto.position(game.at(20,20))
+        if(jugador1.turno() == 1) {
+            game.addVisual(monto1)
+            monto1.position(game.at(20,20))
+        } else {
+            game.addVisual(monto2)
+            monto2.position(game.at(20,0))}
     } else {
         jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
-
+    console.println("jugador1:" + jugador1.turno())
+    console.println("jugador2:" + jugador2.turno())
+    console.println("///")
     tablero.cambiarTurno()
+
+    console.println("jugador1:" + jugador1.turno())
+    console.println("jugador2:" + jugador2.turno())
+    console.println("///")
+
     jugador = tablero.jugadorConTurno()
+
+    console.println("jugador1:" + jugador1.turno())
+    console.println("jugador2:" + jugador2.turno())
+
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
     }

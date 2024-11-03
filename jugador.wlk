@@ -7,7 +7,7 @@ class Jugador{
     var puntaje = 0
     var escobas = 0
 
-    var property turno = false
+    var property turno = 0
 
     method mostrarMano() = manojugador
     method mostrarMonto() = montojugador 
@@ -27,7 +27,8 @@ class Jugador{
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
     method jugada() {
-                    cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta) 
+                    cartasAJugar.forEach({ _carta => console.println("estoy mostrar cartas a jugar jugador")
+                    self.anadirCartaMonto(_carta) 
                                                      self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
                     escobas = escobas + 1
@@ -36,23 +37,17 @@ class Jugador{
     method tengoMayorCantidadCartas() = (self.cantidadMontoJugador() > 20)
     method tengo7deVelo() = (montojugador.any({carta => carta.valorCarta() == 7 && carta.paloCarta() == "oro"}))
 
-    method tengoMayorCantidadOros() {
-        if (montojugador.any({carta => carta.paloCarta() == "oro"})) {
-            (montojugador.filter({carta => carta.paloCarta() == "oro"}).size() > 5)
-        }
-    }
+    method tengoMayorCantidadOros() = (montojugador.any({carta => carta.paloCarta() == "oro"}) 
+                                        &&
+                                       montojugador.filter({carta => carta.paloCarta() == "oro"}).size() > 5)
 
-    method tengoTodosOros() {
-        if (montojugador.any({carta => carta.paloCarta() == "oro"})) {
-            (montojugador.filter({carta => carta.paloCarta() == "oro"}).size() == 10)                   
-        }
-    }
+    method tengoTodosOros() = (montojugador.any({carta => carta.paloCarta() == "oro"})
+                                        &&
+                               montojugador.filter({carta => carta.paloCarta() == "oro"}).size() == 10)
 
-    method tengoSetenta() {
-        if (montojugador.any({carta => carta.valorCarta() == 7})) {
-            (montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2)        
-        }
-    }
+    method tengoSetenta() = (montojugador.any({carta => carta.valorCarta() == 7})
+                                        &&
+                             montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2)
 
     method contabilizarEscobas() {
         puntaje += escobas

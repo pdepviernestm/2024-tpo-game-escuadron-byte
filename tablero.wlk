@@ -46,7 +46,8 @@ object tablero{
 
     method jugada(jugador) {
             const cartasARemover = jugador.mostrarCartasAJugar()
-            cartasARemover.forEach({ _carta => mesa.remove(_carta) }) 
+            cartasARemover.forEach({ _carta => console.println("estoy mostrar cartas a remover en tablero")
+            mesa.remove(_carta) }) 
     }
 
     method cambiarTurno() {
@@ -57,16 +58,16 @@ object tablero{
     }
 
     method contarPuntos() {
-        jugadores.forEach({jugador => 
-            if (jugador.tengoMayorCantidadCartas()) jugador.sumarPuntaje()
-            if (jugador.tengo7deVelo()) jugador.sumarPuntaje()
-            if (jugador.tengoSetenta()) jugador.sumarPuntaje()
-            if (jugador.tengoTodosOros()) {
-                (1..2).forEach({x => jugador.sumarPuntaje()})
-            } else if (jugador.tengoMayorCantidadOros()) {
-                jugador.sumarPuntaje()
+        jugadores.forEach({_jugador => 
+            if (_jugador.tengoMayorCantidadCartas()) _jugador.sumarPuntaje()
+            if (_jugador.tengo7deVelo()) _jugador.sumarPuntaje()
+            if (_jugador.tengoSetenta()) _jugador.sumarPuntaje()
+            if (_jugador.tengoTodosOros()) {
+                (1..2).forEach({x => _jugador.sumarPuntaje()})
+            } else if (_jugador.tengoMayorCantidadOros()) {
+                _jugador.sumarPuntaje()
             }
-            jugador.contabilizarEscobas()
+            _jugador.contabilizarEscobas()
         })
     }
 }
