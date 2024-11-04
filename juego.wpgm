@@ -27,7 +27,6 @@ tablero.anadirJugadores(jugador1)
 tablero.anadirJugadores(jugador2)
 
 jugador1.turno(1)
-
 var jugador = tablero.jugadorConTurno()
 
 var mesaAux = tablero.mostrarMesa()
@@ -39,6 +38,8 @@ var indiceMano = 0
 var state = 0
 var cont = 0
 var cont2 = 0
+var montoVisible1 = false
+var montoVisible2 = false
 
 game.width(22)
 game.height(22)
@@ -52,7 +53,7 @@ if (!tablero.mostrarMazo().isEmpty()) {
     tablero.llenarMesa()
     mesaAux.forEach({
             carta => game.addVisual(carta)
-            carta.position(game.at(cont+4,10))
+            carta.position(game.at(cont+4,13.5))
             cont+=4})
 
     // repartir jugadores
@@ -126,46 +127,46 @@ keyboard.r().onPressDo {
 keyboard.e().onPressDo {
     state = 0
     if(jugador.hayJugada()){
-        jugador.mostrarCartasAJugar().forEach({_carta => console.println("estoy mostrar cartas a jugar juego")
-                                                        game.removeVisual(_carta)})
+        jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
         tablero.jugada(jugador)
         jugador.jugada()
-        if(jugador1.turno() == 1) {
+    
+        if(jugador1.turno() == 1 && !montoVisible1) {
             game.addVisual(monto1)
             monto1.position(game.at(20,20))
-        } else {
+            montoVisible1 = true
+        }
+        if(jugador2.turno() == 1 && !montoVisible2) {
             game.addVisual(monto2)
-            monto2.position(game.at(20,0))}
+            monto2.position(game.at(20,0))
+            montoVisible2 = true
+        }
     } else {
         jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
-    console.println("jugador1:" + jugador1.turno())
-    console.println("jugador2:" + jugador2.turno())
-    console.println("///")
     tablero.cambiarTurno()
-
-    console.println("jugador1:" + jugador1.turno())
-    console.println("jugador2:" + jugador2.turno())
-    console.println("///")
-
     jugador = tablero.jugadorConTurno()
-
-    console.println("jugador1:" + jugador1.turno())
-    console.println("jugador2:" + jugador2.turno())
-
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
     }
 
+var posY = 9.5
+
 keyboard.t().onPressDo {
     if(manoAux.contains(carta)){
+        const columna = mesaAux.size() % 4
+
         game.removeVisual(carta)
         jugador.eliminarCartaMano(carta)
         tablero.anadirCartaMesa(carta)
+
+        console.println(columna)
+        if(columna == 0) posY -= 4
+        const posX = 4 + (columna * 4) 
+
         game.addVisual(carta)
-        const cartaAux = mesaAux.get(mesaAux.size()-1)
-        carta.position(game.at(cartaAux.position().x()+4,6))
+        carta.position(game.at(posX,posY))
     }
     tablero.cambiarTurno()
     jugador = tablero.jugadorConTurno()
@@ -194,8 +195,7 @@ keyboard.q().onPressDo {
     if(tablero.mostrarMazo().isEmpty()) {
         tablero.contarPuntos()
         tablero.mostrarMesa().forEach({_carta => jugador.anadirCartaMonto(_carta)
-                                                 game.removeVisual(_carta)
-                                                 })
+                                                 game.removeVisual(_carta)})
         tablero.limpiarMesa() 
     }
 }

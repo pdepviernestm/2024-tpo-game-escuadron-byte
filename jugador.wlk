@@ -27,8 +27,7 @@ class Jugador{
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
     method jugada() {
-                    cartasAJugar.forEach({ _carta => console.println("estoy mostrar cartas a jugar jugador")
-                    self.anadirCartaMonto(_carta) 
+                    cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta)
                                                      self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
                     escobas = escobas + 1

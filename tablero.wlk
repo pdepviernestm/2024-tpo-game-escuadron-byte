@@ -46,8 +46,7 @@ object tablero{
 
     method jugada(jugador) {
             const cartasARemover = jugador.mostrarCartasAJugar()
-            cartasARemover.forEach({ _carta => console.println("estoy mostrar cartas a remover en tablero")
-            mesa.remove(_carta) }) 
+            cartasARemover.forEach({ _carta => mesa.remove(_carta)})
     }
 
     method cambiarTurno() {
