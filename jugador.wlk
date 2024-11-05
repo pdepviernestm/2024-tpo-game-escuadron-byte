@@ -23,6 +23,7 @@ class Jugador{
     method anadirCartaAJugar(carta) = cartasAJugar.add(carta)
 
     method sumarPuntaje() {puntaje += 1}
+    method puntajeJugador() = puntaje
 
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 

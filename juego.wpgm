@@ -116,13 +116,13 @@ keyboard.right().onPressDo {
 }
 
 keyboard.enter().onPressDo {
-    game.say(carta, carta.msg()) 
+    if(jugador.mostrarCartasAJugar().contains(carta)) {
+        throw new Exception(message="La carta ya fue elegida.")
+        return 0
+    }
+    if(manoAux.contains(carta)) state = 1
     jugador.anadirCartaAJugar(carta)
     }
-
-keyboard.r().onPressDo {
-    state += 1
-}
 
 keyboard.e().onPressDo {
     state = 0
@@ -194,6 +194,8 @@ keyboard.f().onPressDo {
 keyboard.q().onPressDo {
     if(tablero.mostrarMazo().isEmpty()) {
         tablero.contarPuntos()
+        console.println(jugador1.puntajeJugador())
+        console.println(jugador2.puntajeJugador())
         tablero.mostrarMesa().forEach({_carta => jugador.anadirCartaMonto(_carta)
                                                  game.removeVisual(_carta)})
         tablero.limpiarMesa() 

@@ -19,6 +19,4 @@ class Cartas {
     method image() {
         return palo + valor + ".png"
     }
-
-    method msg() = "fui elegida"
 }
