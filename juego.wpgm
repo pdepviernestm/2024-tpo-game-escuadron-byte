@@ -121,6 +121,8 @@ keyboard.enter().onPressDo {
         return 0
     }
     if(manoAux.contains(carta)) state = 1
+    console.println(carta.valorCarta())
+    console.println(carta.paloCarta())
     jugador.anadirCartaAJugar(carta)
     }
 
