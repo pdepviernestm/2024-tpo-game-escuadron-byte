@@ -53,20 +53,20 @@ if (!tablero.mostrarMazo().isEmpty()) {
     tablero.llenarMesa()
     mesaAux.forEach({
             carta => game.addVisual(carta)
-            carta.position(game.at(cont+4,13.5))
+            carta.position(game.at(cont+4,10))
             cont+=4})
 
     // repartir jugadores
     tablero.repartirJugadores()
     jugador1.mostrarMano().forEach({
         carta => game.addVisual(carta)
-        carta.position(game.at(cont2+4,18))
+        carta.position(game.at(cont2+4,17))
         cont2+=4})
     cont2 = 0
     jugador2.mostrarMano().forEach({
         carta => game.addVisual(carta)
         carta.position(game.at(cont2+4,1))
-        cont2+=4})
+        cont2+=4})cont2 = 0
 
 } else {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
@@ -76,6 +76,8 @@ if (!tablero.mostrarMazo().isEmpty()) {
 
 game.addVisual(marco)
 marco.position(manoAux.get(0).position())
+
+
 
 keyboard.left().onPressDo {
     if (state == 0) {
@@ -169,6 +171,7 @@ keyboard.t().onPressDo {
 
         game.addVisual(carta)
         carta.position(game.at(posX,posY))
+        
     }
     tablero.cambiarTurno()
     jugador = tablero.jugadorConTurno()
