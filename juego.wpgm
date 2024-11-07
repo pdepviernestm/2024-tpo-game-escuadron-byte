@@ -143,13 +143,13 @@ keyboard.e().onPressDo {
     
         if(jugador1.turno() == 1 && !montoVisible1) {
             game.addVisual(monto1)
-            monto1.position(game.at(20,20))
+            monto1.position(game.at(26,26))
             montoVisible1 = true
 
         }
         if(jugador2.turno() == 1 && !montoVisible2) {
             game.addVisual(monto2)
-            monto2.position(game.at(20,0))
+            monto2.position(game.at(26,1))
             montoVisible2 = true
         }
 
@@ -172,16 +172,24 @@ keyboard.e().onPressDo {
 keyboard.t().onPressDo {
     if(manoAux.contains(carta)){
         const columna = mesaAux.size() % 6
+        const index = mesaAux.size()
+        console.println(columna)
+
+        posX = 2
+        (index).times{_ => console.println("antes"+posX)
+                                    if(mesaAux.any({_carta => (_carta.position().x() == posX) &&
+                                                              (_carta.position().y() == posY)})){
+                                               console.println("aca")
+                                        if(columna == 0) posY -= 4              
+                                        posX += 4
+                                    }
+                                    console.println("dps"+posX)
+        }
 
         game.removeVisual(carta)
         jugador.eliminarCartaMano(carta)
         tablero.anadirCartaMesa(carta)
 
-        console.println(columna)
-        if(columna == 0) posY -= 4
-        posX = 2 + (columna * 4) 
-
-        
         game.addVisual(carta)
         carta.position(game.at(posX,posY))
        
