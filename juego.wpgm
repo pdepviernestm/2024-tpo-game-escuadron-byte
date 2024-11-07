@@ -7,8 +7,12 @@ object marco {
     var property position = game.origin()
     var imagen="marco.png"
     method image() = imagen
-    method cambiarImagen(nueva) {
-      imagen=nueva
+    method cambiarImagen() {
+        if (imagen == "marco.png") {
+        imagen = "marco2.png"
+        } else {
+        imagen = "marco.png"
+    }
     }
 }
 
@@ -152,13 +156,8 @@ keyboard.e().onPressDo {
             monto2.position(game.at(26,1))
             montoVisible2 = true
         }
+        marco.cambiarImagen()
 
-        if(marco.image()=="marco.png"){
-            marco.cambiarImagen("marco2.png")
-        }else{
-            marco.cambiarImagen("marco.png")
-        }
-        
     } else {
         jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
@@ -197,6 +196,7 @@ keyboard.t().onPressDo {
         
     }
     tablero.cambiarTurno()
+    marco.cambiarImagen()
     jugador = tablero.jugadorConTurno()
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
