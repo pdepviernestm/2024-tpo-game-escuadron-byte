@@ -20,7 +20,10 @@ object tablero{
         const carta = mazo.anyOne()
         mazo.remove(carta)
         return carta
+
     }
+
+   
 
     method llenarMazo() {
     const num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -69,4 +72,5 @@ object tablero{
             _jugador.contabilizarEscobas()
         })
     }
+
 }

@@ -5,7 +5,11 @@ import wollok.game.*
 
 object marco {
     var property position = game.origin()
-    method image() = "marco.png"
+    var imagen="marco.png"
+    method image() = imagen
+    method cambiarImagen(nueva) {
+      imagen=nueva
+    }
 }
 
 object monto1 {
@@ -17,6 +21,7 @@ object monto2 {
     var property position = game.origin()
     method image() = "monto.jpg"
 }
+
 
 program juego {
 
@@ -140,12 +145,20 @@ keyboard.e().onPressDo {
             game.addVisual(monto1)
             monto1.position(game.at(20,20))
             montoVisible1 = true
+
         }
         if(jugador2.turno() == 1 && !montoVisible2) {
             game.addVisual(monto2)
             monto2.position(game.at(20,0))
             montoVisible2 = true
         }
+
+        if(marco.image()=="marco.png"){
+            marco.cambiarImagen("marco2.png")
+        }else{
+            marco.cambiarImagen("marco.png")
+        }
+        
     } else {
         jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
@@ -168,8 +181,11 @@ keyboard.t().onPressDo {
         if(columna == 0) posY -= 4
         posX = 2 + (columna * 4) 
 
+        
         game.addVisual(carta)
         carta.position(game.at(posX,posY))
+       
+        
         
     }
     tablero.cambiarTurno()
