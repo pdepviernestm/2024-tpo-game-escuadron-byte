@@ -26,6 +26,12 @@ object monto2 {
     method image() = "monto.jpg"
 }
 
+object manual{
+    var property position = game.origin()
+    method image()="jugadas.png"
+}
+
+
 
 program juego {
 
@@ -51,7 +57,7 @@ var cont = 4
 var montoVisible1 = false
 var montoVisible2 = false
 
-game.width(28)
+game.width(40)
 game.height(28)
 
 game.boardGround("fondo1.png")
@@ -82,8 +88,8 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
-
-
+game.addVisual(manual)
+manual.position(game.at(30,10))
 game.addVisual(marco)
 marco.position(manoAux.get(0).position())
 
@@ -129,13 +135,21 @@ keyboard.right().onPressDo {
 
 keyboard.enter().onPressDo {
     if(jugador.mostrarCartasAJugar().contains(carta)) {
-        throw new Exception(message="La carta ya fue elegida.")
-        return 0
+        carta.seleccion()
+        jugador.mostrarCartasAJugar().remove(carta) 
+        throw new Exception(message="No hay jugada.")
+      
     }
+
     if(manoAux.contains(carta)) state = 1
     console.println(carta.valorCarta())
     console.println(carta.paloCarta())
     jugador.anadirCartaAJugar(carta)
+    carta.seleccion()
+
+
+
+
     }
 
 keyboard.e().onPressDo {
@@ -159,6 +173,7 @@ keyboard.e().onPressDo {
         marco.cambiarImagen()
 
     } else {
+        jugador.mostrarCartasAJugar().forEach({_carta=> _carta.seleccion()})
         jugador.limpiarCartasAJugar()
         throw new Exception(message="No hay jugada.")
         }
@@ -186,20 +201,26 @@ keyboard.t().onPressDo {
         }
 
         game.removeVisual(carta)
-        jugador.eliminarCartaMano(carta)
         tablero.anadirCartaMesa(carta)
-
+        jugador.eliminarCartaMano(carta)
+        
         game.addVisual(carta)
         carta.position(game.at(posX,posY))
-       
+
+         
+       if(carta.image()== carta.paloCarta() + carta.valorCarta()+ "s"+".png"){
+        carta.seleccion()
+        } 
         
-        
+         
     }
+
     tablero.cambiarTurno()
-    marco.cambiarImagen()
     jugador = tablero.jugadorConTurno()
+    marco.cambiarImagen()
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
+    state = 0
 }
 
 keyboard.f().onPressDo {
