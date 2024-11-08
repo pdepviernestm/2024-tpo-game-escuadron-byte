@@ -31,6 +31,16 @@ object manual{
     method image()="jugadas.png"
 }
 
+object cartel{
+    var property position = game.origin()
+    var imagen= "cartel.png"
+    method image() = imagen
+    method cambiarImagen(nueva) {
+       imagen=nueva
+    }
+
+}
+
 
 
 program juego {
@@ -88,8 +98,14 @@ if (!tablero.mostrarMazo().isEmpty()) {
     throw new Exception(message="El mazo no fue llenado correctamente antes de repartir.")
   }
 
+game.addVisual(cartel)
+cartel.position(game.at(27,20))
+
 game.addVisual(manual)
 manual.position(game.at(30,10))
+
+
+
 game.addVisual(marco)
 marco.position(manoAux.get(0).position())
 
@@ -137,8 +153,7 @@ keyboard.enter().onPressDo {
     if(jugador.mostrarCartasAJugar().contains(carta)) {
         carta.seleccion()
         jugador.mostrarCartasAJugar().remove(carta) 
-        throw new Exception(message="No hay jugada.")
-      
+        
     }
 
     if(manoAux.contains(carta)) state = 1
@@ -148,13 +163,12 @@ keyboard.enter().onPressDo {
     carta.seleccion()
 
 
-
-
     }
 
 keyboard.e().onPressDo {
     state = 0
     if(jugador.hayJugada()){
+        
         jugador.mostrarCartasAJugar().forEach({_carta => game.removeVisual(_carta)})
         tablero.jugada(jugador)
         jugador.jugada()
@@ -175,12 +189,14 @@ keyboard.e().onPressDo {
     } else {
         jugador.mostrarCartasAJugar().forEach({_carta=> _carta.seleccion()})
         jugador.limpiarCartasAJugar()
-        throw new Exception(message="No hay jugada.")
+        cartel.cambiarImagen("noda15.png")
+        game.schedule(4000,{cartel.cambiarImagen("cartel.png")})
+
         }
     tablero.cambiarTurno()
-    jugador = tablero.jugadorConTurno()
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
+    jugador = tablero.jugadorConTurno()
     }
 
 keyboard.t().onPressDo {
@@ -220,8 +236,9 @@ keyboard.t().onPressDo {
     marco.cambiarImagen()
     mesaAux = tablero.mostrarMesa()
     manoAux = jugador.mostrarMano()
-    state = 0
+    
 }
+
 
 keyboard.f().onPressDo {
     if(jugador1.mostrarMano().isEmpty() && jugador2.mostrarMano().isEmpty()){
