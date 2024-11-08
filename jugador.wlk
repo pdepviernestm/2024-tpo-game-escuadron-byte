@@ -4,7 +4,7 @@ class Jugador{
     const montojugador = []
     const cartasAJugar = []
 
-    var puntaje = 0
+    var property puntaje = 0
     var escobas = 0
 
     var property turno = 0
@@ -31,23 +31,18 @@ class Jugador{
                     cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta)
                                                      self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
-                    escobas = escobas + 1
+                    if(tablero.mostrarMesa().isEmpty()) {self.sumarPuntaje()
+                    console.println(self.puntaje())}
     }
 
     method tengoMayorCantidadCartas() = (self.cantidadMontoJugador() > 20)
     method tengo7deVelo() = (montojugador.any({carta => carta.valorCarta() == 7 && carta.paloCarta() == "oro"}))
 
-    method tengoMayorCantidadOros() = (montojugador.any({carta => carta.paloCarta() == "oro"}) 
-                                        &&
-                                       montojugador.filter({carta => carta.paloCarta() == "oro"}).size() > 5)
+    method tengoMayorCantidadOros() = montojugador.filter({carta => carta.paloCarta() == "oro"}).size() > 5
 
-    method tengoTodosOros() = (montojugador.any({carta => carta.paloCarta() == "oro"})
-                                        &&
-                               montojugador.filter({carta => carta.paloCarta() == "oro"}).size() == 10)
+    method tengoTodosOros() = montojugador.filter({carta => carta.paloCarta() == "oro"}).size() == 10
 
-    method tengoSetenta() = (montojugador.any({carta => carta.valorCarta() == 7})
-                                        &&
-                             montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2)
+    method tengoSetenta() = montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2 //Por regla, si ambos tienen 2 sietes nadie suma puntos
 
     method contabilizarEscobas() {
         puntaje += escobas
