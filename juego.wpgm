@@ -311,6 +311,23 @@ program juego {
         // if(jugador1.puntajeJugador() > jugador2.puntajeJugador()) {
       } }
   )
+
+  //Pasar rapido al final del juego para la presentacion:  (Faltaria evitar la repeticion de codigo)
+  keyboard.h().onPressDo(
+    {
+        tablero.contarPuntos()
+        console.println(jugador1.puntajeJugador())
+        console.println(jugador2.puntajeJugador())
+        tablero.mostrarMesa().forEach(
+          { _carta =>
+            jugador.anadirCartaMonto(_carta)
+            return game.removeVisual(_carta)
+          }
+        )
+        tablero.limpiarMesa()
+        // if(jugador1.puntajeJugador() > jugador2.puntajeJugador()) { ...Cartel de los puntos
+      } 
+  )
   
   game.start()
 }
