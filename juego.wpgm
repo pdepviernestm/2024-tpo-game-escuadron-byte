@@ -150,6 +150,7 @@ program juego {
         indiceMano = indiceMano + 1
         if (indiceMano >= manoAux.size()) {
           indiceMano = 0
+          
         }
         carta = manoAux.get(indiceMano)
         marco.position(carta.position())
@@ -170,15 +171,18 @@ program juego {
       if (jugador.mostrarCartasAJugar().contains(carta)) {
         carta.seleccion()
         jugador.mostrarCartasAJugar().remove(carta)
-      }
-      
-      if (manoAux.contains(carta)) {
-        state = 1
-      }
+      } else {
+        jugador.anadirCartaAJugar(carta)
+        carta.seleccion()
+        if (manoAux.contains(carta)) {
+          state = 1
+          marco.position(mesaAux.get(0).position())
+          carta = mesaAux.get(0)
+          }
+        }
       //console.println(carta.valorCarta())
       //console.println(carta.paloCarta())
-      jugador.anadirCartaAJugar(carta)
-      return carta.seleccion()
+      return
     }
   )
   
@@ -191,6 +195,8 @@ program juego {
         )
         tablero.jugada(jugador)
         jugador.jugada()
+        if(mesaAux.isEmpty()) {jugador.sumarPuntaje()
+                    console.println(jugador.puntaje())}
         
         if ((jugador1.turno() == 1) && (!montoVisible1)) {
           game.addVisual(monto1)
@@ -203,20 +209,14 @@ program juego {
           montoVisible2 = true
         }
         
-        console.println("jugador1 " + jugador1.turno())
-        console.println("jugador2 " + jugador2.turno())
-        
-        
         tablero.cambiarTurno()
-        console.println("jugador1 " + jugador1.turno())
-        console.println("jugador2 " + jugador2.turno())
         jugador = tablero.jugadorConTurno()
-        console.println("jugador1 " + jugador1.turno())
-        console.println("jugador2 " + jugador2.turno())
         mesaAux = tablero.mostrarMesa()
         manoAux = jugador.mostrarMano()
         
         marco.cambiarImagen()
+        marco.position(manoAux.get(0).position())
+        carta = manoAux.get(0)
       } else {
         jugador.mostrarCartasAJugar().forEach({ _carta => _carta.seleccion() })
         jugador.limpiarCartasAJugar()
@@ -261,9 +261,12 @@ program juego {
       
       tablero.cambiarTurno()
       jugador = tablero.jugadorConTurno()
-      marco.cambiarImagen()
       mesaAux = tablero.mostrarMesa()
       manoAux = jugador.mostrarMano()
+
+      marco.cambiarImagen()
+      marco.position(manoAux.get(0).position())
+      carta = manoAux.get(0)
     }
   )
   
@@ -292,6 +295,8 @@ program juego {
           }
         )
       }
+      marco.position(manoAux.get(0).position())
+      carta = manoAux.get(0)
     }
   )
   

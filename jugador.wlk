@@ -23,7 +23,6 @@ class Jugador{
     method anadirCartaAJugar(carta) = cartasAJugar.add(carta)
 
     method sumarPuntaje() {puntaje += 1}
-    method puntajeJugador() = puntaje
 
     method hayJugada() = (cartasAJugar.map({x => x.valorCarta()}).sum() == 15)
 
@@ -31,8 +30,6 @@ class Jugador{
                     cartasAJugar.forEach({ _carta => self.anadirCartaMonto(_carta)
                                                      self.eliminarCartaMano(_carta)})
                     self.limpiarCartasAJugar()
-                    if(tablero.mostrarMesa().isEmpty()) {self.sumarPuntaje()
-                    console.println(self.puntaje())}
     }
 
     method tengoMayorCantidadCartas() = (self.cantidadMontoJugador() > 20)
