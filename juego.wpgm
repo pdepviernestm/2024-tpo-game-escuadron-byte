@@ -84,7 +84,6 @@ program juego {
   var state = 0
   var posX = 2
   var posY = 17
-  var cont = 4
   var montoVisible1 = false
   var montoVisible2 = false
   
@@ -108,21 +107,10 @@ program juego {
     
     
     tablero.repartirJugadores()
-    jugador1.mostrarMano().forEach(
-      { carta =>
-        game.addVisual(carta)
-        carta.position(game.at(cont + 4, 23))
-        cont = cont + 4
-      }
-    )
-    cont = 4
-    jugador2.mostrarMano().forEach(
-      { carta =>
-        game.addVisual(carta)
-        carta.position(game.at(cont + 4, 1))
-        cont = cont + 4
-      }
-    )
+    jugador1.visualizarCartasMano(23)
+    jugador2.visualizarCartasMano(1)
+
+
   } else {
     throw new Exception(
       message = "El mazo no fue llenado correctamente antes de repartir."
@@ -303,23 +291,11 @@ program juego {
           "nohaycartas.png"
         )
       if (jugador1.mostrarMano().isEmpty() && jugador2.mostrarMano().isEmpty()) {
-        cont = 4
         tablero.repartirJugadores()
-        jugador1.mostrarMano().forEach(
-          { carta =>
-            game.addVisual(carta)
-            carta.position(game.at(cont + 4, 23))
-            cont = cont + 4
-          }
-        )
-        cont = 4
-        jugador2.mostrarMano().forEach(
-          { carta =>
-            game.addVisual(carta)
-            carta.position(game.at(cont + 4, 1))
-            cont = cont + 4
-          }
-        )
+        jugador1.visualizarCartasMano(23)
+        jugador2.visualizarCartasMano(1)
+
+       
       }
       marco.position(manoAux.get(0).position())
       carta = manoAux.get(0)

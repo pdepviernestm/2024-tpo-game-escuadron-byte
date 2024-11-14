@@ -46,5 +46,18 @@ class Jugador{
     }
 
     method puntajeTotal() = puntaje + escobas 
+
+    method visualizarCartasMano(altura) {
+        var cont = 4
+        self.mostrarMano().forEach(
+      { carta =>
+        game.addVisual(carta)
+        carta.position(game.at(cont + 4, altura))
+        cont = cont + 4
+      }
+    )
+    cont = 4
+      
+    }
   
 }
