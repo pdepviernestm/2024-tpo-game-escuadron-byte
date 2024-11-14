@@ -47,6 +47,25 @@ object cartel {
   }
 }
 
+object tablaPuntos1 {
+    var property position = game.origin()
+    var texto = ""
+    var fontSize = 20 // Tamaño de letra inicial
+
+    method text() = texto
+    method final(nuevo) {
+        texto = nuevo
+    }
+    method textColor() = "00FF00FF"
+    
+    // Método para cambiar el tamaño de fuente
+    method setFontSize(newSize) {
+        fontSize = newSize
+    }
+
+    // Método para obtener el tamaño de fuente actual
+    method getFontSize() = fontSize
+}
 program juego {
   const jugador1 = new Jugador()
   const jugador2 = new Jugador()
@@ -58,7 +77,7 @@ program juego {
   
   var mesaAux = tablero.mostrarMesa()
   var manoAux = jugador.mostrarMano()
-  
+
   var carta = 0
   var indiceMesa = 0
   var indiceMano = 0
@@ -120,6 +139,7 @@ program juego {
   
   game.addVisual(marco)
   marco.position(manoAux.get(0).position())
+  
   
   
   
@@ -195,6 +215,7 @@ program juego {
         )
         tablero.jugada(jugador)
         jugador.jugada()
+        
         if(mesaAux.isEmpty()) {jugador.sumarPuntaje()
                     console.println(jugador.puntaje())}
         
@@ -202,11 +223,16 @@ program juego {
           game.addVisual(monto1)
           monto1.position(game.at(26, 26))
           montoVisible1 = true
+
+
         }
         if ((jugador2.turno() == 1) && (!montoVisible2)) {
           game.addVisual(monto2)
           monto2.position(game.at(26, 1))
           montoVisible2 = true
+        }
+        if(mesaAux.isEmpty()){
+          jugador.contabilizarEscobas()
         }
         
         tablero.cambiarTurno()
@@ -304,8 +330,8 @@ program juego {
   keyboard.q().onPressDo(
     { if (tablero.mostrarMazo().isEmpty()) {
         tablero.contarPuntos()
-        console.println(jugador1.puntajeJugador())
-        console.println(jugador2.puntajeJugador())
+        console.println(jugador1.puntaje())
+        console.println(jugador2.puntaje())
         tablero.mostrarMesa().forEach(
           { _carta =>
             jugador.anadirCartaMonto(_carta)
@@ -314,15 +340,46 @@ program juego {
         )
         tablero.limpiarMesa()
         // if(jugador1.puntajeJugador() > jugador2.puntajeJugador()) {
-      } }
+      } 
+      tablaPuntos1.position(game.at(30,8))
+
+    game.addVisual(tablaPuntos1)
+    var ganador
+    if(jugador1.puntajeTotal()>jugador2.puntajeTotal()) 
+       { ganador = " Ganador Jugador 1"
+       }else if (jugador1.puntajeTotal()==jugador2.puntajeTotal()){
+        ganador ="Empate"
+       }else{
+        ganador=" Ganador Jugador 2"
+       }
+    
+      tablaPuntos1.final(
+                    ganador +"  \n \n "+
+                    "-- | Mas Cartas  | Siete Velo  | Oros   |  Setenta  | Escobas \n \n"+
+                    "Jugador 1   |"+ jugador1.tengoMayorCantidadCartas() +" | "+
+                                jugador1.tengo7deVelo()+" | " +
+                                jugador1.tengoTodosOros()+ " | " + 
+                                jugador1.tengoSetenta()+ " | "+
+                                jugador1.escobas()+ " \n \n"+
+                                "Jugador 2    |" + jugador2.tengoMayorCantidadCartas()+" | "+
+                                    jugador2.tengo7deVelo()+ " | " + 
+                                    jugador2.tengoTodosOros()+" | "+
+                                    jugador2.tengoSetenta()+" | "+
+                                    jugador2.escobas() + " \n"
+                
+                    )
+    
+      
+      
+      }
   )
 
   //Pasar rapido al final del juego para la presentacion:  (Faltaria evitar la repeticion de codigo)
   keyboard.h().onPressDo(
     {
         tablero.contarPuntos()
-        console.println(jugador1.puntajeJugador())
-        console.println(jugador2.puntajeJugador())
+        console.println(jugador1.puntaje())
+        console.println(jugador2.puntaje())
         tablero.mostrarMesa().forEach(
           { _carta =>
             jugador.anadirCartaMonto(_carta)
@@ -330,6 +387,31 @@ program juego {
           }
         )
         tablero.limpiarMesa()
+        tablaPuntos1.position(game.at(30,8))
+
+    game.addVisual(tablaPuntos1)
+    var ganador
+    if(jugador1.puntajeTotal() >jugador2.puntajeTotal() ) ganador = " Ganador Jugador 1"
+    if(jugador1.puntajeTotal() <jugador2.puntajeTotal() ) ganador = " Ganador Jugador 2" 
+    if(jugador1.puntajeTotal() ==jugador2.puntajeTotal() ) ganador = " Empate"
+        
+    
+      tablaPuntos1.final(
+                    ganador +"  \n \n "+
+                    "-- | Mas Cartas  | Siete Velo  | Oros   |  Setenta  | Escobas \n \n"+
+                    "Jugador 1   |"+ jugador1.tengoMayorCantidadCartas() +" | "+
+                                jugador1.tengo7deVelo()+" | " +
+                                jugador1.tengoTodosOros()+ " | " + 
+                                jugador1.tengoSetenta()+ " | "+
+                                jugador1.escobas() + " \n \n"+
+                                "Jugador 2    |" + jugador2.tengoMayorCantidadCartas()+" | "+
+                                    jugador2.tengo7deVelo()+ " | " + 
+                                    jugador2.tengoTodosOros()+" | "+
+                                    jugador2.tengoSetenta()+" | "+
+                                    jugador2.escobas() + " \n"
+                
+                    )
+    
         // if(jugador1.puntajeJugador() > jugador2.puntajeJugador()) { ...Cartel de los puntos
       } 
   )

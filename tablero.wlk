@@ -69,7 +69,7 @@ object tablero{
             } else if (_jugador.tengoMayorCantidadOros()) {
                 _jugador.sumarPuntaje()
             }
-            _jugador.contabilizarEscobas()
+            
         })
     }
 

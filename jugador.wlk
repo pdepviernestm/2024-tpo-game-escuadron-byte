@@ -5,7 +5,7 @@ class Jugador{
     const cartasAJugar = []
 
     var property puntaje = 0
-    var escobas = 0
+    var property escobas = 0
 
     var property turno = 0
 
@@ -42,7 +42,9 @@ class Jugador{
     method tengoSetenta() = montojugador.filter({carta => carta.valorCarta() == 7}).size() > 2 //Por regla, si ambos tienen 2 sietes nadie suma puntos
 
     method contabilizarEscobas() {
-        puntaje += escobas
-        escobas = 0
+        escobas +=1
     }
+
+    method puntajeTotal() = puntaje + escobas 
+  
 }
