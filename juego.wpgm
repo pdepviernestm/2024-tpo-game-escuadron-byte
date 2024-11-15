@@ -231,6 +231,8 @@ program juego {
         marco.cambiarImagen()
         marco.position(manoAux.get(0).position())
         carta = manoAux.get(0)
+        indiceMesa = 0
+        indiceMano = 0
       } else {
         jugador.mostrarCartasAJugar().forEach({ _carta => _carta.seleccion() })
         jugador.limpiarCartasAJugar()
@@ -281,6 +283,8 @@ program juego {
       marco.cambiarImagen()
       marco.position(manoAux.get(0).position())
       carta = manoAux.get(0)
+      indiceMesa = 0
+      indiceMano = 0
     }
   )
   
@@ -299,6 +303,8 @@ program juego {
       }
       marco.position(manoAux.get(0).position())
       carta = manoAux.get(0)
+      indiceMesa = 0
+      indiceMano = 0
     }
   )
   
